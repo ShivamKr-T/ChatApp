@@ -23,7 +23,13 @@ export const signup=async (req,res)=>{
         await newUser.save();
         if(newUser){
             createTokenAndSaveCookie(newUser._id,res);
-            res.status(201).json({message:"User created successfully",newUser});
+            res.status(201).json({message:"User created successfully",
+                user:{
+                    _id:newUser._id,
+                    fullname:newUser.fullname,
+                    email:newUser.email
+                },
+            });
         }
         
     } catch (error) {
@@ -41,11 +47,13 @@ export const login=async (req,res)=>{
             return res.status(400).json({error:"Invalid user credentials"});
         }
         createTokenAndSaveCookie(user._id,res);
-        res.status(201).json({message:"User logged in sucessfully",user:{
-            _id:user._id,
-            fullname:user.fullname,
-            email:user.email
-        }})
+        res.status(201).json({message:"User logged in sucessfully",
+            user:{
+                _id:user._id,
+                fullname:user.fullname,
+                email:user.email
+            },
+        })
     } catch (error) {
         console.log(error);
         res.status(500).json({error:"Internal server error"});
@@ -59,5 +67,15 @@ export const logout=async(req,res)=>{
     } catch (error) {
         console.log(error);
         res.status(500).json({error:"Internal server error"});
+    }
+}
+
+export const allUsers=async (req,res)=>{
+    try {
+        const loggedInUser=req.user._id;
+        const filteredUsers=await User.find({_id:{$ne:loggedInUser}}).select("-password");
+        res.status(201).json(filteredUsers);
+    } catch (error) {
+        console.log("Error in allUser controller: "+error)
     }
 }
