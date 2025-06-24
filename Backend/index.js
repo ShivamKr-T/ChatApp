@@ -13,7 +13,14 @@ dotenv.config();
 // middleware
 app.use(express.json());
 app.use(cookieParser());
-app.use(cors());
+const corsOptions = {
+  origin: "https://tappy-talk.vercel.app",
+  credential: true,
+   methods: ['GET', 'HEAD', 'PUT', 'PATCH', 'POST', 'DELETE', 'OPTIONS'],
+};
+
+app.options("*",cors(corsOptions));
+app.use(cors(corsOptions));
 
 const PORT =process.env.PORT || 3001;
 const URI=process.env.MONGODB_URI;
