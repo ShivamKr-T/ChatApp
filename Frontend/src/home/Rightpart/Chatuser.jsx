@@ -21,7 +21,7 @@ function Chatuser() {
       <div className='flex space-x-3 items-center'>
         <div className={`avatar ${isOnline ? 'avatar-online' : ''}`}>
           <div className="w-15 rounded-full ml-4 mt-2 mb-2">
-            <img src="https://img.daisyui.com/images/profile/demo/gordon@192.webp" />
+            <img src={`https://img.icons8.com/?size=100&id=84020&format=png&color=${isOnline ? "21b310" : "ffffff"}`} />
           </div>
         </div>
         <div>
