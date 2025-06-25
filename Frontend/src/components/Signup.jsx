@@ -22,7 +22,9 @@ function Signup() {
         confirmPassword:data.confirmPassword
     };
     // console.log(userInfo);
-    await axios.post("/api/user/signup",userInfo)
+    await axios.post("/api/user/signup",userInfo,{
+      withCredentials:true
+    })
     .then((response)=>{
         // console.log(response.data);
         if(response.data){

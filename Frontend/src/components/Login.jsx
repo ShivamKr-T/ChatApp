@@ -19,7 +19,9 @@ function Login() {
       password: data.password,
     };
 
-    await axios.post("/api/user/login", userInfo)
+    await axios.post("/api/user/login", userInfo,{
+      withCredentials:true
+    })
       .then((response) => {
         if (response.data) {
           toast.success("Login successful");

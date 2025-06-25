@@ -15,7 +15,7 @@ app.use(express.json());
 app.use(cookieParser());
 app.use(
   cors({
-    origin: "https://tappytalk.onrender.com", // replace with your actual frontend URL
+    origin: "https://tappytalk.onrender.com",
     credentials: true,
   })
 );
