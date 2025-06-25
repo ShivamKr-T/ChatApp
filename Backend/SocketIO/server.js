@@ -7,7 +7,7 @@ const app = express();
 const server = http.createServer(app);
 const io = new Server(server, {
   cors: {
-    origin: "https://tappy-talk.vercel.app",
+    origin: "http://localhost:3001",
     methods: ["GET", "POST"],
   },
 });
