@@ -23,7 +23,7 @@ export const signup=async (req,res)=>{
         await newUser.save();
         if(newUser){
             createTokenAndSaveCookie(newUser._id,res);
-            res.status(201).json({message:"User created successfully",
+            return res.status(201).json({message:"User created successfully",
                 user:{
                     _id:newUser._id,
                     fullname:newUser.fullname,
@@ -41,13 +41,17 @@ export const signup=async (req,res)=>{
 export const login=async (req,res)=>{
     const {email,password}=req.body;
     try {
-        const user=await User.findOne({email});
-        const isMatch=await bcrypt.compare(password,user.password);
-        if(!user||!isMatch){
-            return res.status(400).json({error:"Invalid user credentials"});
+        const user = await User.findOne({ email });
+        if (!user) {
+            return res.status(400).json({ error: "Invalid user credentials" });
         }
+        const isMatch = await bcrypt.compare(password, user.password);
+        if (!isMatch) {
+            return res.status(400).json({ error: "Invalid user credentials" });
+        }
+
         createTokenAndSaveCookie(user._id,res);
-        res.status(201).json({message:"User logged in sucessfully",
+        return res.status(200).json({message:"User logged in sucessfully",
             user:{
                 _id:user._id,
                 fullname:user.fullname,
