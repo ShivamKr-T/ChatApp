@@ -13,7 +13,12 @@ dotenv.config();
 // middleware
 app.use(express.json());
 app.use(cookieParser());
-app.use(cors());
+app.use(
+  cors({
+    origin: "https://tappytalk.onrender.com", // replace with your actual frontend URL
+    credentials: true,
+  })
+);
 
 const PORT =process.env.PORT || 3001;
 const URI=process.env.MONGODB_URI;
